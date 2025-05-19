@@ -1,0 +1,23 @@
+﻿@model QRCodeGenerator.ViewModels.BarcodeViewModel
+
+@{
+    ViewData["Title"] = "Generate Barcode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Generate Barcode</h2>
+
+<form asp-action="Barcode" method="post">
+    <div class="form-group">
+        <label>Text to Encode:</label>
+        <input asp-for="BarcodeText" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Generate</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.BarcodeImageBase64))
+{
+    <hr />
+    <h4>Your Barcode:</h4>
+    <img src="@Model.BarcodeImageBase64" alt="Barcode" />
+}

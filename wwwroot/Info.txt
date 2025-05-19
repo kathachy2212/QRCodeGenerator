@@ -1,0 +1,22 @@
+﻿
+=>> Scaffold-DbContext "Server=RAIHAN;Database=QrCodeGeneratorDb;User Id=testKatha;Password=testKatha123456;Encrypt=False;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context QRDbContextName -f
+
+
+
+=>> https://console.cloud.google.com/welcome?inv=1&invt=AbxbpQ&project=qrcodegenerator-459904
+
+
+
+CREATE TABLE Users (
+    Id INT PRIMARY KEY IDENTITY,
+    Email NVARCHAR(256) NOT NULL UNIQUE,
+    PasswordHash NVARCHAR(MAX),
+    Provider NVARCHAR(50) NULL
+);
+
+
+
+ALTER TABLE Users
+ADD FullName NVARCHAR(255) NULL,
+    Phone NVARCHAR(50) NULL,
+    Address NVARCHAR(255) NULL;

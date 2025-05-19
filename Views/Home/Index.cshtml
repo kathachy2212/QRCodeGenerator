@@ -1,0 +1,70 @@
+﻿@model QRCodeGenerator.ViewModels.QRCodeViewModel
+@{
+    ViewData["Title"] = "QR Code Generator";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h2 class="mb-4">QR Code Generator</h2>
+
+        @if (Model.Step == 1)
+        {
+            <form method="post">
+                <div class="form-group">
+                    <label>How many fields do you want to add?</label>
+                    <input type="number" name="FieldCount" min="1" class="form-control" required />
+                </div>
+                <button type="submit" name="action" value="SetFieldCount" class="btn btn-primary mt-3">Next</button>
+            </form>
+        }
+
+        @if (Model.Step == 2)
+        {
+            <form method="post">
+                @for (int i = 0; i < Model.FieldCount; i++)
+                {
+                    <div class="form-group">
+                        <label>Field @(i + 1)</label>
+                        <input name="FieldNames[@i]" class="form-control" required />
+                    </div>
+                }
+                <input type="hidden" name="FieldCount" value="@Model.FieldCount" />
+                <button type="submit" name="action" value="SetFieldNames" class="btn btn-primary mt-3">Next</button>
+            </form>
+        }
+
+        @if (Model.Step == 3)
+        {
+            <form method="post">
+                @for (int i = 0; i < Model.FieldCount; i++)
+                {
+                    <div class="form-group">
+                        <label>@Model.FieldNames[i]</label>
+                        <input name="FieldValues[@i]" class="form-control" required />
+                        <input type="hidden" name="FieldNames[@i]" value="@Model.FieldNames[i]" />
+                    </div>
+                }
+                <input type="hidden" name="FieldCount" value="@Model.FieldCount" />
+                <button type="submit" name="action" value="GenerateQRCode" class="btn btn-success mt-3">Generate QR Code</button>
+            </form>
+        }
+
+        @if (Model.Step == 4)
+        {
+            <div>
+                <h4 class="text-success">QR Code Generated!</h4>
+                <img src="@Model.QRCodeImageBase64" alt="QR Code" style="height:300px; width:300px;" class="img-fluid" />
+                <br />
+                
+
+                <form asp-controller="Home" asp-action="DownloadQRCodePdf" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="QRCodeImageBase64" value="@Model.QRCodeImageBase64" />
+                    <button type="submit" class="btn btn-danger mt-2">Download QR Code as PDF</button>
+                    <a href="/" class="btn btn-secondary mt-2">Start Over</a>
+                </form>
+            </div>
+        }
+    </div>
+</div>
