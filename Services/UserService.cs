@@ -40,6 +40,8 @@ public class UserService : IUserService
         return VerifyPassword(password, user.PasswordHash);
     }
 
+
+    //passoord varify
     private bool VerifyPassword(string password, string storedHash)
     {
         var hashOfInput = ComputeSha256Hash(password);
