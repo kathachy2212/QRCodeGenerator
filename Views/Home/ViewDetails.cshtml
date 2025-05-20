@@ -1,0 +1,25 @@
+﻿@model List<(string Name, string Value)>
+
+@{
+    ViewData["Title"] = "QR Code Data";
+}
+
+<h2>Scanned QR Code Data</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Field Name</th>
+            <th>Field Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>
